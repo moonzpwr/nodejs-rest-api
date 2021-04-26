@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
-// const fs = require('fs/promises')
-// const path = require('path')
-const {listContacts, getContactById, removeContact, addContact, updateContact,} = require('../../model/index.js')
-const {validationCreateContact, validationUpdateContact} = require('./valid-contacts-router.js')
+const {listContacts, getContactById, removeContact, addContact, updateContact, updateStatusContact} = require('../../model/index.js')
+const { validationCreateContact, validationUpdateContact, validationUpdateFavorite} = require('./valid-contacts-router.js')
+// const handleError = require('../../helper/handle-error')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -55,6 +54,15 @@ router.post('/', validationCreateContact, async (req, res, next) => {
   
 })
 
+// router.post('/', validationCreateContact, handleError(async (req, res, next) => {
+//     const contact = await addContact(req.body)
+//     return res.status(201).json({
+//       status: 'success',
+//       code: 201,
+//       contact: contact
+//     })
+// }))
+
 router.delete('/:contactId', async (req, res, next) => {
   try {
     const contact = await removeContact(req.params.contactId)
@@ -78,8 +86,7 @@ router.delete('/:contactId', async (req, res, next) => {
 
 router.patch('/:contactId', validationUpdateContact, async (req, res, next) => {
   try {
-    if (req.body) {
-      const contact = await updateContact(req.params.contactId, req.body)
+    const contact = await updateContact(req.params.contactId, req.body)
     if (contact) {
       res.json({
         status: 'success',
@@ -93,17 +100,31 @@ router.patch('/:contactId', validationUpdateContact, async (req, res, next) => {
         message: "Not Found"
       })
     }
-    } else {
-        res.status(400).json({
-          status: 'error',
-          code: 400,
-          message: "missing fields"
-        })
-    }
-    
   } catch (error) {
     next(error)
   }
 })
+
+router.patch('/:contactId/favorite', validationUpdateFavorite, async(req, res, next) => {
+  try {
+    const contact = await updateStatusContact(req.params.contactId, req.body)
+    if (contact) {
+      res.json({
+        status: 'success',
+        code: 200,
+        contact: contact
+      })
+    } else {
+      res.status(404).json({
+        status: 'error',
+        code: 404,
+        message: "Not Found"
+      })
+    }
+  } catch (error) {
+    next(error)
+  }
+}) 
+  
 
 module.exports = router
