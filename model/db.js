@@ -1,4 +1,4 @@
-const { optional } = require('joi');
+// const { optional } = require('joi');
 const mongoose = require('mongoose')
 require('dotenv').config()
 
