@@ -1,6 +1,8 @@
   const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
+
 const gravatar = require('gravatar')
+
 const bcrypt = require('bcryptjs')
 //   
 //   const {Gender} = require('../../helper/constans')
@@ -23,6 +25,7 @@ const bcrypt = require('bcryptjs')
   token: {
     type: String,
     default: null,
+
     },
     avatar: {
       type: String,
@@ -30,6 +33,7 @@ const bcrypt = require('bcryptjs')
         return gravatar.url(this.email, {s: '250'}, true)
       }
     }
+  },
   }, { versionKey: false, timestamps: true });
 
 userSchema.pre('save', async function (next) {

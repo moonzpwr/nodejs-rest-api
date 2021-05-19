@@ -12,9 +12,6 @@
     "cors": "2.8.5",
     "cross-env": "7.0.3",
     "express": "4.17.1",
-<<<<<<< Updated upstream
-    "morgan": "1.10.0"
-=======
     "gravatar": "1.8.1",
     "jimp": "0.16.1",
     "joi": "^17.4.0",
@@ -24,7 +21,6 @@
     "multer": "1.4.2",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0"
->>>>>>> Stashed changes
   },
   "devDependencies": {
     "eslint": "^7.19.0",
