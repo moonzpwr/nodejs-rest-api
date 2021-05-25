@@ -1,10 +1,11 @@
   const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { nanoid } = require('nanoid');
 //   
 //   const {Gender} = require('../../helper/constans')
 // 
-  const userSchema = new Schema({
+const userSchema = new Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
@@ -23,6 +24,15 @@ const bcrypt = require('bcryptjs')
     type: String,
     default: null,
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verifyTokenEmail: {
+    type: String,
+    required: true,
+    default: nanoid()
+  }
   }, { versionKey: false, timestamps: true });
 
 userSchema.pre('save', async function (next) {
